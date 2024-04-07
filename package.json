@@ -1,0 +1,37 @@
+{
+	"name": "@nesvet/deprecated-extensions",
+	"version": "1.0.173",
+	"description": "Deprecated native extensions",
+	"type": "module",
+	"main": "lib/index.js",
+	"module": "lib/index.js",
+	"exports": {
+		".": "./lib/index.js",
+		"./basedir": "./lib/basedir.js",
+		"./noop": "./lib/noop.js",
+		"./pass": "./lib/pass.js",
+		"./Object": "./lib/Object.js",
+		"./Array": "./lib/Array.js",
+		"./Set": "./lib/Set.js",
+		"./Map": "./lib/Map.js",
+		"./Date": "./lib/Date.js",
+		"./Math": "./lib/Math.js"
+	},
+	"packageManager": "yarn@1.22.22",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nesvet/deprecated-extensions.git"
+	},
+	"keywords": [
+		"extensions",
+		"deprecated"
+	],
+	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+	"license": "MIT",
+	"devDependencies": {
+		"@nesvet/eslint-config": "^1"
+	}
+}
