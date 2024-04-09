@@ -1,6 +1,6 @@
 {
 	"name": "@nesvet/deprecated-extensions",
-	"version": "1.0.173",
+	"version": "1.0.174",
 	"description": "Deprecated native extensions",
 	"type": "module",
 	"main": "./dist/index.js",
