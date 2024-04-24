@@ -1,8 +1,10 @@
-Object.defineProperty(Set.prototype, "first", {
-	get() {
-		return this.values().next().value;
-	}
-});
+try {
+	Object.defineProperty(Set.prototype, "first", {
+		get() {
+			return this.values().next().value;
+		}
+	});
+} catch {}
 
 Set.prototype.addAll = function (items) {
 	for (const item of items)
@@ -43,6 +45,7 @@ Set.prototype.sort = function (callback) {
 		this.delete(item);
 		this.add(item);
 	}
+	
 	return this;
 };
 
@@ -52,6 +55,7 @@ Set.prototype.filter = function (callback) {
 	for (const item of this)
 		if (callback(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -61,6 +65,7 @@ Set.prototype.filterMap = function (callback) {
 	for (let item of this)
 		if (item = callback(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -70,6 +75,7 @@ Set.prototype.map = function (callback) {
 	let i = 0;
 	for (const item of this)
 		a.push(callback(item, i++));
+	
 	return a;
 };
 
@@ -83,6 +89,7 @@ Set.prototype.intersection = function (iterable) {
 	for (const item of this)
 		if (iterable.includes(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -92,6 +99,7 @@ Set.prototype.without = function (...arrays) {
 	for (const item of this)
 		if (!flattenedArray.includes(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -99,6 +107,7 @@ Set.prototype.hasAny = function (iterable) {
 	for (const item of iterable)
 		if (this.has(item))
 			return true;
+	
 	return false;
 };
 
@@ -106,6 +115,7 @@ Set.prototype.hasAll = function (iterable) {
 	for (const item of iterable)
 		if (!this.has(item))
 			return false;
+	
 	return true;
 };
 
@@ -117,6 +127,7 @@ Set.prototype.some = function (callback) {
 	for (const item of this)
 		if (callback(item))
 			return true;
+	
 	return false;
 };
 
@@ -124,6 +135,7 @@ Set.prototype.every = function (callback) {
 	for (const item of this)
 		if (!callback(item))
 			return false;
+	
 	return true;
 };
 
@@ -145,6 +157,7 @@ Set.prototype.ids = function () {
 	const a = [];
 	for (const item of this)
 		a.push(item._id);
+	
 	return a;
 };
 
@@ -154,6 +167,7 @@ Set.prototype.trimTo = function (ids) {
 	for (const item of this)
 		if (ids.includes(item._id))
 			a.push(item);
+	
 	return a;
 };
 

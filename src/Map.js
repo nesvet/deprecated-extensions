@@ -8,12 +8,13 @@ const { now } = Date;
 const { random, randomInt, round, ceil, floor } = Math;
 const { MAX_SAFE_INTEGER } = Number;
 
-
-Object.defineProperty(Map.prototype, "firstValue", {
-	get() {
-		return this.values().next().value;
-	}
-});
+try {
+	Object.defineProperty(Map.prototype, "firstValue", {
+		get() {
+			return this.values().next().value;
+		}
+	});
+} catch {}
 
 Map.prototype.setWithTimeout = function (key, value, ms) {
 	return this.set(key, [ value, setTimeout(() => this.delete(key), ms) ]);
@@ -23,6 +24,7 @@ Map.prototype.getWithTimeout = function (key) {
 	const [ value, timeout ] = this.get(key) || [];
 	clearTimeout(timeout);
 	this.delete(key);
+	
 	return value;
 };
 
@@ -56,8 +58,8 @@ Map.prototype.makeId = function () {
 	return crypto.randomBytes(size).toString("hex");
 	//#else
 	const string =
-		round(random() * MAX_SAFE_INTEGER).toString(36)+
-		now().toString(36)+
+		round(random() * MAX_SAFE_INTEGER).toString(36) +
+		now().toString(36) +
 		round(random() * MAX_SAFE_INTEGER).toString(36);
 	
 	const halfExcess = (string.length - size) / 2;
@@ -70,8 +72,9 @@ Map.prototype.uid = function () {
 	
 	let _id;
 	do
-		_id = (this.cid ?? "")+this.makeId();
+		_id = (this.cid ?? "") + this.makeId();
 	while (this.has(_id));
+	
 	return _id;
 };
 
@@ -105,6 +108,7 @@ Map.prototype.filterValues = function (callback) {
 	for (const item of this.values())
 		if (callback(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -114,6 +118,7 @@ Map.prototype.filterMapValues = function (callback) {
 	for (let item of this.values())
 		if (item = callback(item))
 			a.push(item);
+	
 	return a;
 };
 
@@ -122,6 +127,7 @@ Map.prototype.sort = function (callback) {
 		this.delete(key);
 		this.set(key, value);
 	}
+	
 	return this;
 };
 
@@ -137,6 +143,7 @@ Map.prototype.add = function (item) {
 Map.prototype.addAll = function (items) {
 	for (const item of items)
 		this.set(item._id, item);
+	
 	return this;
 };
 
@@ -168,6 +175,7 @@ Map.prototype.someValue = function (callback) {
 	for (const item of this.values())
 		if (callback(item))
 			return true;
+	
 	return false;
 };
 
@@ -175,6 +183,7 @@ Map.prototype.everyValue = function (callback) {
 	for (const item of this.values())
 		if (!callback(item))
 			return false;
+	
 	return true;
 };
 
@@ -182,6 +191,7 @@ Map.prototype.hasAny = function (...items) {
 	for (const item of items)
 		if (this.has(item._id))
 			return true;
+	
 	return false;
 };
 

@@ -1,14 +1,16 @@
-Object.defineProperty(Array.prototype, "first", {
-	get() {
-		return this[0];
-	}
-});
-
-Object.defineProperty(Array.prototype, "last", {
-	get() {
-		return this[this.length - 1];
-	}
-});
+try {
+	Object.defineProperty(Array.prototype, "first", {
+		get() {
+			return this[0];
+		}
+	});
+	
+	Object.defineProperty(Array.prototype, "last", {
+		get() {
+			return this[this.length - 1];
+		}
+	});
+} catch {}
 
 Array.prototype.add = function (item, toBeginning) {
 	if (!this.includes(item))
