@@ -9,5 +9,5 @@ $ npm install @nesvet/deprecated-extensions
 Or
 
 ```sh
-$ yarn add @nesvet/deprecated-extensions
+$ bun add @nesvet/deprecated-extensions
 ```

@@ -1,31 +1,31 @@
 {
-	"name": "@nesvet/deprecated-extensions",
-	"version": "1.0.178",
-	"description": "Deprecated native extensions",
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"exports": {
-		"./server": "./dist/server.js",
-		"./client": "./dist/client.js"
-	},
-	"packageManager": "bun@1.1.8",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "bun .conveyer.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/nesvet/deprecated-extensions.git"
-	},
-	"keywords": [
-		"extensions",
-		"deprecated"
-	],
-	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
-	"license": "MIT",
-	"devDependencies": {
-		"@nesvet/conveyer": "^2",
-		"@nesvet/eslint-config": "^1"
-	}
+  "name": "@nesvet/deprecated-extensions",
+  "version": "1.0.178",
+  "description": "Deprecated native extensions",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    "./server": "./dist/server.js",
+    "./client": "./dist/client.js"
+  },
+  "packageManager": "bun@1.1.9",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bun .conveyer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nesvet/deprecated-extensions.git"
+  },
+  "keywords": [
+    "extensions",
+    "deprecated"
+  ],
+  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@nesvet/conveyer": "^2",
+    "@nesvet/eslint-config": "^1"
+  }
 }
