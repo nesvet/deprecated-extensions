@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
-
-export let basedir = process.argv[1];
+/** @deprecated */
+export let [ , basedir ] = process.argv;
 
 while (basedir && basedir !== "/" && !fs.existsSync(path.join(basedir, "package.json")))
 	basedir = path.dirname(basedir);

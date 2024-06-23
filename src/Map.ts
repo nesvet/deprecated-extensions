@@ -1,3 +1,5 @@
+/* eslint-disable no-extend-native */
+
 //#if _SERVER
 import crypto from "node:crypto";
 //#endif
@@ -7,6 +9,100 @@ import "./Math";
 const { now } = Date;
 const { random, randomInt, round, ceil, floor } = Math;
 const { MAX_SAFE_INTEGER } = Number;
+
+
+declare global {
+	
+	interface Map<K, V> {
+		
+		/** @deprecated */
+		add(item: V): void;
+		
+		/** @deprecated */
+		addAll(items: V[]): void;
+		
+		/** @deprecated */
+		cid?: string;
+		
+		/** @deprecated */
+		deleteAll(keys: K[]): void;
+		
+		/** @deprecated */
+		deleteValue(value: V): void;
+		
+		/** @deprecated */
+		everyValue(callback: (item: V) => boolean): boolean;
+		
+		/** @deprecated */
+		filterMapValues(callback: (item: V) => unknown): unknown[];
+		
+		/** @deprecated */
+		filterValues(callback: (item: V) => boolean): V[];
+		
+		/** @deprecated */
+		findValue(callback: (item: V) => boolean): V;
+		
+		/** @deprecated */
+		firstValue: V;
+		
+		/** @deprecated */
+		getAll(keys: K[]): V[];
+		
+		/** @deprecated */
+		getUntil(key: K, limit: number, delay: number): Promise<V>;
+		
+		/** @deprecated */
+		getWithTimeout(key: K): V;
+		
+		/** @deprecated */
+		hasAny(...items: V[]): boolean;
+		
+		/** @deprecated */
+		ids(): string[];
+		
+		/** @deprecated */
+		makeId(): string;
+		
+		/** @deprecated */
+		map(callbackfn: (value: [K, V], index: number, array: [K, V][]) => unknown): unknown[];
+		
+		/** @deprecated */
+		mapValues(callbackfn: (value: V, index: number, array: V[]) => unknown): unknown[];
+		
+		/** @deprecated */
+		reduce(callbackfn: (previousValue: unknown, currentValue: unknown, currentIndex: number, array: [K, V][]) => unknown, initialValue: unknown): unknown;
+		
+		/** @deprecated */
+		reduceValues(callbackfn: (previousValue: unknown, currentValue: unknown, currentIndex: number, array: V[]) => unknown, initialValue: unknown): unknown;
+		
+		/** @deprecated */
+		remove(item: V): void;
+		
+		/** @deprecated */
+		removeAll(items: V[]): void;
+		
+		/** @deprecated */
+		reset(items: V[]): void;
+		
+		/** @deprecated */
+		setWithTimeout(key: K, value: V, ms: number): this;
+		
+		/** @deprecated */
+		setWithUid(value: V): this;
+		
+		/** @deprecated */
+		someValue(callback: (item: V) => boolean): boolean;
+		
+		/** @deprecated */
+		sort(callback: (a: [ K, V ], b: [ K, V ]) => number): this;
+		
+		/** @deprecated */
+		uid(): string;
+		
+	}
+	
+}
+
 
 try {
 	Object.defineProperty(Map.prototype, "firstValue", {
@@ -57,6 +153,7 @@ Map.prototype.makeId = function () {
 	//#if _SERVER
 	return crypto.randomBytes(size).toString("hex");
 	//#else
+	
 	const string =
 		round(random() * MAX_SAFE_INTEGER).toString(36) +
 		now().toString(36) +
@@ -116,7 +213,7 @@ Map.prototype.filterMapValues = function (callback) {
 	
 	const a = [];
 	for (let item of this.values())
-		if (item = callback(item))
+		if ((item = callback(item)))
 			a.push(item);
 	
 	return a;
@@ -155,7 +252,7 @@ Map.prototype.deleteAll = function (keys) {
 
 Map.prototype.deleteValue = function (value) {
 	for (const entry of this.entries())
-		if (entry[1] == value)
+		if (entry[1] === value)
 			this.delete(entry[0]);
 	
 };
@@ -200,6 +297,7 @@ Map.prototype.findValue = function (callback) {
 		if (callback(item))
 			return item;
 	
+	return undefined;// eslint-disable-line unicorn/no-useless-undefined
 };
 
 Map.prototype.reset = function (items) {

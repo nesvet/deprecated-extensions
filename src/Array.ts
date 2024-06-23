@@ -1,3 +1,105 @@
+/* eslint-disable no-extend-native */
+
+class EmptyArray extends Array {
+	constructor() {
+		super();
+		
+		Object.freeze(this);
+		
+	}
+	
+	push() {
+		return 0;
+	}
+	
+	unshift() {
+		return 0;
+	}
+	
+	splice() {
+		return [];
+	}
+	
+}
+
+declare global {
+	
+	interface Array<T> {
+		
+		/** @deprecated */
+		add(item: T, toBeginning: boolean): this;
+		
+		/** @deprecated */
+		addAll(items: T[]): this;
+		
+		/** @deprecated */
+		empty(): void;
+		
+		/** @deprecated */
+		filterMap(callback: (item: T) => unknown): unknown[];
+		
+		/** @deprecated */
+		first: T;
+		
+		/** @deprecated */
+		ids(): string[];
+		
+		/** @deprecated */
+		includesAll(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		includesAny(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		intersection(iterable: T[]): T[];
+		
+		/** @deprecated */
+		invoke(...args: unknown[]): void;
+		
+		/** @deprecated */
+		invokeCall(...args: unknown[]): void;
+		
+		/** @deprecated */
+		invokeMap(...args: unknown[]): void;
+		
+		/** @deprecated */
+		last: T;
+		
+		/** @deprecated */
+		pushAll(items: T[]): number;
+		
+		/** @deprecated */
+		random(): T;
+		
+		/** @deprecated */
+		remove(item: T): number;
+		
+		/** @deprecated */
+		removeAll(items: T[]): number;
+		
+		/** @deprecated */
+		removeOne(item: T): boolean;
+		
+		/** @deprecated */
+		trimTo(ids: string[]): T[];
+		
+		/** @deprecated */
+		with(...arrays: T[][]): T[];
+		
+		/** @deprecated */
+		without(arrays: T[][]): T[];
+		
+	}
+	
+	interface ArrayConstructor {
+		
+		/** @deprecated */
+		Empty: typeof EmptyArray;
+	}
+	
+}
+
+
 try {
 	Object.defineProperty(Array.prototype, "first", {
 		get() {
@@ -7,15 +109,16 @@ try {
 	
 	Object.defineProperty(Array.prototype, "last", {
 		get() {
-			return this[this.length - 1];
+			return this.at(-1);
 		}
 	});
 } catch {}
 
 Array.prototype.add = function (item, toBeginning) {
 	if (!this.includes(item))
-		toBeginning ?
-			this.unshift(item) :
+		if (toBeginning)
+			this.unshift(item);
+		else
 			this.push(item);
 	
 	return this;
@@ -37,7 +140,7 @@ Array.prototype.pushAll = function (items) {
 };
 
 Array.prototype.random = function () {
-	return this[this.length * Math.random() | 0];
+	return this[this.length * Math.random() | 0];// eslint-disable-line no-bitwise
 };
 
 Array.prototype.with = function (...arrays) {
@@ -57,7 +160,8 @@ Array.prototype.removeOne = function (item) {
 
 Array.prototype.remove = function (item) {
 	
-	let i, removed = 0;
+	let i,
+		removed = 0;
 	while ((i = this.indexOf(item)) > -1) {
 		this.splice(i, 1);
 		removed++;
@@ -91,7 +195,7 @@ Array.prototype.filterMap = function (callback) {
 	
 	const a = [];
 	for (let item of this)
-		if (item = callback(item))
+		if ((item = callback(item)))
 			a.push(item);
 	
 	return a;
@@ -100,20 +204,6 @@ Array.prototype.filterMap = function (callback) {
 Array.prototype.intersection = function (iterable) {
 	return this.filter(item => iterable.includes(item));
 };
-
-// Array.prototype.keep = function (iterable) {
-//
-// 	for (let i = 0, { length } = this; i < length; i++) {
-// 		const item = this[i];
-// 		if (!iterable.includes(item)) {
-// 			this.splice(i, 1);
-// 			i--;
-// 			length--;
-// 		}
-// 	}
-//
-// 	return this;
-// };
 
 Array.prototype.includesAny = function (array) {
 	return array.some(item => this.includes(item));
@@ -159,24 +249,4 @@ Array.prototype.invokeMap = function (...args) {
 	return a;
 };
 
-Array.Empty = class EmptyArray extends Array {
-	constructor() {
-		super();
-		
-		Object.freeze(this);
-		
-	}
-	
-	push() {
-		return 0;
-	}
-	
-	unshift() {
-		return 0;
-	}
-	
-	splice() {
-		return [];
-	}
-	
-};
+Array.Empty = EmptyArray;

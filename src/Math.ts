@@ -1,5 +1,21 @@
 const { floor, random, round } = Math;
 
+declare global {
+	interface Math {
+		
+		/** @deprecated */
+		randomInt(from: number, to: number): number;
+		
+		/** @deprecated */
+		round1(n: number): number;
+		
+		/** @deprecated */
+		round2(n: number): number;
+		
+		/** @deprecated */
+		round3(n: number): number;
+	}
+}
 
 Math.randomInt = (from, to) => floor(random() * (to - from + 1) + from);
 

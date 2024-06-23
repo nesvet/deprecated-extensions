@@ -1,3 +1,108 @@
+/* eslint-disable no-extend-native */
+
+class EmptySet extends Set {
+	// eslint-disable-next-line no-useless-constructor
+	constructor() {
+		super();
+		
+	}
+	
+	add() {
+		return this;
+	}
+	
+}
+
+declare global {
+	
+	interface Set<T> {
+		
+		/** @deprecated */
+		addAll(items: T[]): this;
+		
+		/** @deprecated */
+		deleteAll(items: T[]): void;
+		
+		/** @deprecated */
+		every(callback: (item: T) => boolean): boolean;
+		
+		/** @deprecated */
+		filter(callback: (item: T) => boolean): T[];
+		
+		/** @deprecated */
+		filterMap(callback: (item: T) => unknown): unknown[];
+		
+		/** @deprecated */
+		first: T;
+		
+		/** @deprecated */
+		hasAll(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		hasAny(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		ids(): string[];
+		
+		/** @deprecated */
+		includes(item: T): boolean;
+		
+		/** @deprecated */
+		includesAll(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		includesAny(iterable: T[]): boolean;
+		
+		/** @deprecated */
+		intersection(iterable: T[]): T[];
+		
+		/** @deprecated */
+		invoke(...args: unknown[]): void;
+		
+		/** @deprecated */
+		invokeCall(...args: unknown[]): void;
+		
+		/** @deprecated */
+		map(callback: (item: T, i: number) => unknown): unknown[];
+		
+		/** @deprecated */
+		reAdd(item: T): this;
+		
+		/** @deprecated */
+		reduce(callbackfn: (previousValue: unknown, currentValue: unknown, currentIndex: number, array: unknown[]) => unknown): unknown;
+		
+		/** @deprecated */
+		remove(item: T): boolean;
+		
+		/** @deprecated */
+		removeAll(items: T[]): void;
+		
+		/** @deprecated */
+		reset(items: T[]): void;
+		
+		/** @deprecated */
+		some(callback: (item: T) => boolean): boolean;
+		
+		/** @deprecated */
+		sort(callback: (a: T, b: T) => number): this;
+		
+		/** @deprecated */
+		trimTo(ids: string[]): T[];
+		
+		/** @deprecated */
+		without(arrays: T[][]): T[];
+		
+	}
+	
+	interface SetConstructor {
+		
+		/** @deprecated */
+		Empty: typeof EmptySet;
+	}
+	
+}
+
+
 try {
 	Object.defineProperty(Set.prototype, "first", {
 		get() {
@@ -63,7 +168,7 @@ Set.prototype.filterMap = function (callback) {
 	
 	const a = [];
 	for (let item of this)
-		if (item = callback(item))
+		if ((item = callback(item)))
 			a.push(item);
 	
 	return a;
@@ -171,14 +276,4 @@ Set.prototype.trimTo = function (ids) {
 	return a;
 };
 
-Set.Empty = class EmptySet extends Set {
-	constructor() {
-		super();
-		
-	}
-	
-	add() {
-		return this;
-	}
-	
-};
+Set.Empty = EmptySet;
