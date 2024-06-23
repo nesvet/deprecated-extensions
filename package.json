@@ -13,7 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "bun .conveyer.js",
-    "postbuild": "tsc --emitDeclarationOnly -p ."
+    "postbuild": "tsc --emitDeclarationOnly -p . --outFile dist/client.js && tsc --emitDeclarationOnly -p . --outFile dist/server.js"
   },
   "repository": {
     "type": "git",
